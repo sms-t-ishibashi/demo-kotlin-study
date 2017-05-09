@@ -2,7 +2,10 @@ package kotolin.study.controller.page
 
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.web.bind.annotation.RequestMapping
+import java.util.ArrayList
+import kotolin.study.model.Memo
+import org.springframework.web.bind.annotation.*
+
 
 /**
  * @author tomoharu-ishibashi
@@ -11,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 @RequestMapping("memo")
 class MemoController {
 
-    @RequestMapping("")
+    @GetMapping
     fun get(model: Model): String {
 //        List<Map<String, Object>> items = new ArrayList<>();
         val items = mutableListOf<MutableMap<String, Any>>()
@@ -21,12 +24,13 @@ class MemoController {
 //        Map<String, Object> item = new HashMap<>();
         val item = LinkedHashMap<String, Any>()
         val item2 = hashMapOf<String, Any>()
-        val item3 = mutableMapOf<String, Any>()
+//        val item3 = mutableMapOf<String, Any>()
 
 //        item.put("memo", "Empty Memo");
 //        item.put("author", "Empty Author");
 //        items.add(item);
 
+        // Mapの詰め方
         // Javaの記述
         item.put("memo", "Empty Memo")
         item.put("author", "Empty Author")
@@ -37,13 +41,20 @@ class MemoController {
         item2["author"] = "Author bassy"
         items += item2
 
-        // Kotlinの(?)記述
-        item3 += ("memo" to "memo memo memo")
-        item3 += ("author" to "issy bassy gakky")
-        items += item3
+        // Kotlinの記述
+        items += mutableMapOf<String, Any>(
+                "memo" to "memo memo memo",
+                "author" to "issy bassy gakky"
+        )
 
 //        model.addAttribute("items", items);
         model.addAttribute("items", items)
+        return "memo"
+    }
+
+    @PostMapping
+    fun post(@ModelAttribute item: Memo, model: Model): String {
+        model.addAttribute("items", listOf(item))
         return "memo"
     }
 }
