@@ -2,9 +2,12 @@ package kotolin.study.controller.page
 
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import java.util.ArrayList
 import kotolin.study.model.Memo
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import java.util.*
 
 
 /**
@@ -49,6 +52,14 @@ class MemoController {
 
 //        model.addAttribute("items", items);
         model.addAttribute("items", items)
+        return "memo"
+    }
+
+    @GetMapping("param/{memo:[a-zA-Z0-9]+}")
+    fun getParams(@PathVariable memo: String,
+                  @RequestParam(required = false, defaultValue = "Default Author") author: String,
+                  model: Model): String {
+        model.addAttribute("items", listOf(Memo(memo, author, Date())))
         return "memo"
     }
 
