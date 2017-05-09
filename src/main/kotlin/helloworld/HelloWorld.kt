@@ -2,7 +2,7 @@ package helloworld
 
 data class Customer(val name: String, val email: String)
 
-fun main(args: Array<String>) {
+fun hello_world(args: Array<String>) {
     val customer = Customer("John Smith", "john.smith@email.com")
     println(customer)
     println("Hello World !!!")
