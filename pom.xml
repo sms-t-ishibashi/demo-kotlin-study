@@ -57,7 +57,11 @@
             <artifactId>kotlin-reflect</artifactId>
             <version>${kotlin.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.jetbrains.spek</groupId>
+            <artifactId>spek-data-driven-extension</artifactId>
+            <version>1.1.1</version>
+        </dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
