@@ -41,7 +41,7 @@ class MemoControllerSpec : Spek({
             it("modelにitemsが存在すること") {
                 result.andExpect(MockMvcResultMatchers.model().attributeExists("items"))
 
-                var items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
+                val items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
                 assertEquals(items.size, 3)
                 assertEquals(items[0].memo, "Empty Memo")
                 assertEquals(items[0].author, "Empty Author")
@@ -74,7 +74,7 @@ class MemoControllerSpec : Spek({
         it("modelにitemsが存在すること") {
             result.andExpect(MockMvcResultMatchers.model().attributeExists("items"))
 
-            var items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
+            val items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
             assertEquals(items.size, 1)
             assertEquals(items[0].memo, "submitted memo")
             assertEquals(items[0].author, "submitted author")
@@ -128,7 +128,7 @@ class MemoControllerSpec : Spek({
             it("modelにitemsが存在すること") {
                 result.andExpect(MockMvcResultMatchers.model().attributeExists("items"))
 
-                var items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
+                val items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
                 assertEquals(items.size, 1)
                 assertEquals(items[0].memo, expected.first)
                 assertEquals(items[0].author, expected.second)
