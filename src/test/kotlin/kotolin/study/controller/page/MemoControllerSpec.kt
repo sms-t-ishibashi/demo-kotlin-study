@@ -104,8 +104,6 @@ class MemoControllerSpec : Spek({
                 data("ａｂｃ", "", HttpStatus.NOT_FOUND),
                 data("ＸＹＺ", "", HttpStatus.NOT_FOUND),
                 data("７７７", "", HttpStatus.NOT_FOUND),
-                data("ａｂｃ", "", HttpStatus.NOT_FOUND),
-                data("ａｂｃ", "", HttpStatus.NOT_FOUND),
                 data("$%^&*あいうえお", "", HttpStatus.NOT_FOUND),
                 data("", "", HttpStatus.NOT_FOUND),
                 data("", "Query Author", HttpStatus.NOT_FOUND)
