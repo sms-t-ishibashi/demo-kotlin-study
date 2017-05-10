@@ -41,7 +41,7 @@ class MemoController {
 
         // スクリプト言語っぽい記述
         item2["memo"] = "memo memo"
-        item2["author"] = "Author bassy"
+        item2["author"] = "abcde fghid"
         items += item2
 
         // Kotlinの記述
