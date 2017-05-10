@@ -1,6 +1,7 @@
 package kotolin.study.controller.page
 
 import kotolin.study.model.Memo
+import kotolin.study.service.MemoService
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.given
@@ -9,6 +10,7 @@ import org.jetbrains.spek.api.dsl.on
 import org.jetbrains.spek.data_driven.data
 import org.jetbrains.spek.data_driven.on
 import org.junit.Assert.assertEquals
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
@@ -20,9 +22,11 @@ import org.springframework.util.MultiValueMap
 /**
  * @author tomoharu-ishibashi
  */
+@SpringBootTest
 class MemoControllerSpec : Spek({
 
-    val mvc = MockMvcBuilders.standaloneSetup(MemoController()).build()
+    // TODO AutoWiredとモック作成
+    val mvc = MockMvcBuilders.standaloneSetup(MemoController(MemoService())).build()
 
     given("/memoにGETリクエストした場合") {
         val result = mvc.perform(MockMvcRequestBuilders.get("/memo/")) // FIXME 何故か末尾のスラが要る
@@ -37,14 +41,14 @@ class MemoControllerSpec : Spek({
             it("modelにitemsが存在すること") {
                 result.andExpect(MockMvcResultMatchers.model().attributeExists("items"))
 
-                var items = result.andReturn().modelAndView.modelMap["items"] as List<MutableMap<String, Any>>
+                val items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
                 assertEquals(items.size, 3)
-                assertEquals(items[0]["memo"], "Empty Memo")
-                assertEquals(items[0]["author"], "Empty Author")
-                assertEquals(items[1]["memo"], "memo memo")
-                assertEquals(items[1]["author"], "abcde fghid")
-                assertEquals(items[2]["memo"], "memo memo memo")
-                assertEquals(items[2]["author"], "issy bassy gakky")
+                assertEquals(items[0].memo, "Empty Memo")
+                assertEquals(items[0].author, "Empty Author")
+                assertEquals(items[1].memo, "memo memo")
+                assertEquals(items[1].author, "abcde fghid")
+                assertEquals(items[2].memo, "memo memo memo")
+                assertEquals(items[2].author, "issy bassy gakky")
             }
         }
     }
@@ -70,7 +74,7 @@ class MemoControllerSpec : Spek({
         it("modelにitemsが存在すること") {
             result.andExpect(MockMvcResultMatchers.model().attributeExists("items"))
 
-            var items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
+            val items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
             assertEquals(items.size, 1)
             assertEquals(items[0].memo, "submitted memo")
             assertEquals(items[0].author, "submitted author")
@@ -124,7 +128,7 @@ class MemoControllerSpec : Spek({
             it("modelにitemsが存在すること") {
                 result.andExpect(MockMvcResultMatchers.model().attributeExists("items"))
 
-                var items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
+                val items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
                 assertEquals(items.size, 1)
                 assertEquals(items[0].memo, expected.first)
                 assertEquals(items[0].author, expected.second)
