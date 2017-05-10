@@ -3,6 +3,7 @@ package kotolin.study.controller.page
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import kotolin.study.model.Memo
+import kotolin.study.service.MemoService
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.PathVariable
@@ -15,42 +16,14 @@ import java.util.*
  */
 @Controller
 @RequestMapping("memo")
-class MemoController {
+class MemoController(val memoService: MemoService) {
 
     @GetMapping
     fun get(model: Model): String {
-//        List<Map<String, Object>> items = new ArrayList<>();
-        val items = mutableListOf<MutableMap<String, Any>>()
-//        val items2 = ArrayList<Map<String, Any>>()
-//        val items3 = mutableListOf<Map<String, Any>>()
-
-//        Map<String, Object> item = new HashMap<>();
-        val item = LinkedHashMap<String, Any>()
-        val item2 = hashMapOf<String, Any>()
-//        val item3 = mutableMapOf<String, Any>()
-
-//        item.put("memo", "Empty Memo");
-//        item.put("author", "Empty Author");
-//        items.add(item);
-
-        // Mapの詰め方
-        // Javaの記述
-        item.put("memo", "Empty Memo")
-        item.put("author", "Empty Author")
-        items.add(item)
-
-        // スクリプト言語っぽい記述
-        item2["memo"] = "memo memo"
-        item2["author"] = "abcde fghid"
-        items += item2
-
-        // Kotlinの記述
-        items += mutableMapOf<String, Any>(
-                "memo" to "memo memo memo",
-                "author" to "issy bassy gakky"
-        )
-
-//        model.addAttribute("items", items);
+        val items = mutableListOf<Memo>()
+        items += memoService.join("Empty Memo", "Empty Author")
+        items += memoService.join("memo memo", "abcde fghid")
+        items += memoService.join("memo memo memo", "issy bassy gakky")
         model.addAttribute("items", items)
         return "memo"
     }
@@ -59,7 +32,7 @@ class MemoController {
     fun getParams(@PathVariable memo: String,
                   @RequestParam(required = false, defaultValue = "Default Author") author: String,
                   model: Model): String {
-        model.addAttribute("items", listOf(Memo(memo, author, Date())))
+        model.addAttribute("items", listOf(memoService.join(memo, author)))
         return "memo"
     }
 
