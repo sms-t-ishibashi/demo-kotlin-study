@@ -1,5 +1,6 @@
 package kotolin.study.controller.page
 
+import com.nhaarman.mockito_kotlin.*
 import kotolin.study.model.Memo
 import kotolin.study.service.MemoService
 import org.jetbrains.spek.api.Spek
@@ -10,14 +11,14 @@ import org.jetbrains.spek.api.dsl.on
 import org.jetbrains.spek.data_driven.data
 import org.jetbrains.spek.data_driven.on
 import org.junit.Assert.assertEquals
+import org.mockito.Mockito
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
-import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
+import java.util.*
 
 /**
  * @author tomoharu-ishibashi
@@ -25,8 +26,27 @@ import org.springframework.util.MultiValueMap
 @SpringBootTest
 class MemoControllerSpec : Spek({
 
+    // beforeSpec的なイメージ
+    val memoService: MemoService = mock {
+        on { join(any(), any()) }.doAnswer { invocationOnMock ->
+            val memo = invocationOnMock.arguments[0] as String?
+            val author = invocationOnMock.arguments[1] as String?
+            Memo(memo, author, Date())
+        }
+
+        on { readAll() }.doReturn(listOf<Memo>(
+                Memo("Empty Memo", "Empty Author", null),
+                Memo("memo memo", "abcde fghid", null),
+                Memo("memo memo memo", "issy bassy gakky", null)
+        ))
+
+        on { readByAuthor(any())}.doReturn(listOf<Memo>(
+                Memo("memo", "author", null)
+        ))
+    }
+
     // TODO AutoWiredとモック作成
-    val mvc = MockMvcBuilders.standaloneSetup(MemoController(MemoService())).build()
+    val mvc = MockMvcBuilders.standaloneSetup(MemoController(memoService)).build()
 
     given("/memoにGETリクエストした場合") {
         val result = mvc.perform(MockMvcRequestBuilders.get("/memo/")) // FIXME 何故か末尾のスラが要る
@@ -54,30 +74,32 @@ class MemoControllerSpec : Spek({
     }
 
     describe("/memoにPOSTリクエストした場合のレスポンスを確認する") {
-        val params: MultiValueMap<String, String> = LinkedMultiValueMap()
-        params["memo"] = "submitted memo"
-        params["author"] = "submitted author"
+        val paramMemo = "submitted memo"
+        val paramAuthor = "submitted author"
 
         val result = mvc.perform(
                 MockMvcRequestBuilders
                         .post("/memo/") // FIXME 何故か末尾のスラが要る
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                         .characterEncoding("UTF-8")
-                        .params(params))
+                        .param("memo", paramMemo)
+                        .param("author", paramAuthor))
 
-        it("ステータスは200である") {
-            result.andExpect(MockMvcResultMatchers.status().isOk)
+        it("writeが呼び出されること") {
+            argumentCaptor<String>().apply {
+                verify(memoService, Mockito.times(1)).write(capture(), capture())
+
+                assertEquals(paramMemo, firstValue)
+                assertEquals(paramAuthor, secondValue)
+            }
         }
+
+        it("ステータスは3XXである") {
+            result.andExpect(MockMvcResultMatchers.status().is3xxRedirection)
+        }
+
         it("memoのviewが返却される") {
-            result.andExpect(MockMvcResultMatchers.view().name("memo"))
-        }
-        it("modelにitemsが存在すること") {
-            result.andExpect(MockMvcResultMatchers.model().attributeExists("items"))
-
-            val items = result.andReturn().modelAndView.modelMap["items"] as List<Memo>
-            assertEquals(items.size, 1)
-            assertEquals(items[0].memo, "submitted memo")
-            assertEquals(items[0].author, "submitted author")
+            result.andExpect(MockMvcResultMatchers.view().name("redirect:/memo"))
         }
     }
 
@@ -144,6 +166,28 @@ class MemoControllerSpec : Spek({
             it("ステータスは $expected である") {
                 result.andExpect(MockMvcResultMatchers.status().isNotFound)
             }
+        }
+    }
+
+    describe("/memo/author/{author}にGETリクエストした場合のレスポンスを確認する") {
+        val param = "author"
+        val result = mvc.perform(MockMvcRequestBuilders.get("/memo/author/$param"))
+
+        it("readByAuthorが呼び出されること") {
+            argumentCaptor<String>().apply {
+                verify(memoService, Mockito.times(1)).readByAuthor(capture())
+
+                assertEquals(param, firstValue)
+            }
+        }
+        it("ステータス200である") {
+            result.andExpect(MockMvcResultMatchers.status().isOk)
+        }
+        it("memoのviewが返却される") {
+            result.andExpect(MockMvcResultMatchers.view().name("memo"))
+        }
+        it("modelにitemsが存在すること") {
+            result.andExpect(MockMvcResultMatchers.model().attributeExists("items"))
         }
     }
 })

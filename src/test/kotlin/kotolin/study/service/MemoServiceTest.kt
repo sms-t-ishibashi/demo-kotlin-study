@@ -10,20 +10,20 @@ import org.junit.Assert.assertEquals
  * @author tomoharu-ishibashi
  */
 class MemoServiceSpec : Spek({
-
-    describe("joinに引数を渡す") {
-        val memoService = MemoService()
-
-        val paramMemo = "testMemo"
-        val paramAuthor = "testAuthor"
-
-        val expected = Memo(paramMemo, paramAuthor, null)
-        val actual = memoService.join(paramMemo, paramAuthor)
-
-        it("joinの戻り値が期待値通りであること") {
-            assertEquals(actual.memo, expected.memo)
-            assertEquals(actual.author, expected.author)
-        }
-
-    }
+//
+//    describe("joinに引数を渡す") {
+//        val memoService = MemoService()
+//
+//        val paramMemo = "testMemo"
+//        val paramAuthor = "testAuthor"
+//
+//        val expected = Memo(paramMemo, paramAuthor, null)
+//        val actual = memoService.join(paramMemo, paramAuthor)
+//
+//        it("joinの戻り値が期待値通りであること") {
+//            assertEquals(actual.memo, expected.memo)
+//            assertEquals(actual.author, expected.author)
+//        }
+//
+//    }
 })

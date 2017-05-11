@@ -20,11 +20,14 @@ class MemoController(val memoService: MemoService) {
 
     @GetMapping
     fun get(model: Model): String {
-        val items = mutableListOf<Memo>()
-        items += memoService.join("Empty Memo", "Empty Author")
-        items += memoService.join("memo memo", "abcde fghid")
-        items += memoService.join("memo memo memo", "issy bassy gakky")
-        model.addAttribute("items", items)
+        model.addAttribute("items", memoService.readAll())
+        return "memo"
+    }
+
+    @GetMapping("author/{author}")
+    operator fun get(@PathVariable author: String,
+                     model: Model): String {
+        model.addAttribute("items", memoService.readByAuthor(author))
         return "memo"
     }
 
@@ -38,7 +41,7 @@ class MemoController(val memoService: MemoService) {
 
     @PostMapping
     fun post(@ModelAttribute item: Memo, model: Model): String {
-        model.addAttribute("items", listOf(item))
-        return "memo"
+        memoService.write(item.memo as String, item.author as String)
+        return "redirect:/memo"
     }
 }
