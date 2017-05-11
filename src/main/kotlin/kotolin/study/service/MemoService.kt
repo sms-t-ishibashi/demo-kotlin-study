@@ -17,7 +17,5 @@ class MemoService(val memoRepository: MemoRepository) {
 
     fun readByAuthor(author: String): List<Memo> = memoRepository.findByAuthor(author)
 
-    fun write(memo: String, author: String){
-        memoRepository.save(Memo(memo, author, Date()))
-    }
+    fun write(memo: String, author: String) = memoRepository.save(Memo(memo, author, Date()))
 }
