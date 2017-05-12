@@ -1,4 +1,4 @@
-package kotlin.study.repository.jdbc
+package study.repository.jdbc
 
 import org.flywaydb.core.Flyway
 import org.springframework.jdbc.core.JdbcTemplate

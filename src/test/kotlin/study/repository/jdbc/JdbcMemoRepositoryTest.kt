@@ -1,11 +1,10 @@
-package kotlin.study.repository.jdbc
+package study.repository.jdbc
 
-import kotolin.study.model.Memo
-import kotolin.study.repository.MemoRepository
+import study.model.Memo
+import study.repository.MemoRepository
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.on
-import org.junit.Test
 
 import org.junit.Assert.*
 import java.util.*

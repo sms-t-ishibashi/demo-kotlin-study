@@ -1,4 +1,4 @@
-package kotlin.study.controller.page
+package study.page
 
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
-import kotlin.study.model.Memo
-import kotlin.study.service.MemoService
+import study.model.Memo
+import study.service.MemoService
 
 
 /**

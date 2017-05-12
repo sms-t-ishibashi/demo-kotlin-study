@@ -1,11 +1,11 @@
-package kotlin.study.service
+package study.service
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
-import kotolin.study.model.Memo
-import kotolin.study.repository.MemoRepository
+import study.model.Memo
+import study.repository.MemoRepository
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.it

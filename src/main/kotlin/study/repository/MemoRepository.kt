@@ -1,7 +1,6 @@
-package kotlin.study.repository
+package study.repository
 
-import kotolin.study.model.Memo
-import org.springframework.stereotype.Repository
+import study.model.Memo
 
 /**
  * @author tomoharu-ishibashi
