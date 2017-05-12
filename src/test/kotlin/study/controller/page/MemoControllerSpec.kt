@@ -1,8 +1,8 @@
-package kotolin.study.controller.page
+package study.controller.page
 
 import com.nhaarman.mockito_kotlin.*
-import kotolin.study.model.Memo
-import kotolin.study.service.MemoService
+import study.model.Memo
+import study.service.MemoService
 import org.jetbrains.spek.api.Spek
 import org.jetbrains.spek.api.dsl.describe
 import org.jetbrains.spek.api.dsl.given
@@ -18,6 +18,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
+import study.page.MemoController
 import java.util.*
 
 /**

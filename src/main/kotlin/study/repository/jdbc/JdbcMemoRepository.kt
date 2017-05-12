@@ -1,7 +1,7 @@
-package kotolin.study.repository.jdbc
+package study.repository.jdbc
 
-import kotolin.study.model.Memo
-import kotolin.study.repository.MemoRepository
+import study.model.Memo
+import study.repository.MemoRepository
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 

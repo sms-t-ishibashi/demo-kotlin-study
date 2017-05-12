@@ -1,13 +1,13 @@
-package kotolin.study.controller.page
+package study.page
 
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import kotolin.study.model.Memo
-import kotolin.study.service.MemoService
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
+import study.model.Memo
+import study.service.MemoService
 
 
 /**
