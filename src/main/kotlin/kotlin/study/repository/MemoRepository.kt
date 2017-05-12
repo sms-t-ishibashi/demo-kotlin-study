@@ -1,4 +1,4 @@
-package kotolin.study.repository
+package kotlin.study.repository
 
 import kotolin.study.model.Memo
 import org.springframework.stereotype.Repository

@@ -1,4 +1,4 @@
-package kotolin.study.model
+package kotlin.study.model
 
 import java.util.*
 

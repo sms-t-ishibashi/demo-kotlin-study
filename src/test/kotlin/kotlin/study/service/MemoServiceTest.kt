@@ -1,4 +1,4 @@
-package kotolin.study.service
+package kotlin.study.service
 
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.doReturn

@@ -1,4 +1,4 @@
-package kotolin.study.repository.jdbc
+package kotlin.study.repository.jdbc
 
 import kotolin.study.model.Memo
 import kotolin.study.repository.MemoRepository

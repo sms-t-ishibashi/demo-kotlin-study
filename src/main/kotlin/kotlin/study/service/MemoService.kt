@@ -1,7 +1,7 @@
-package kotolin.study.service
+package kotlin.study.service
 
-import kotolin.study.model.Memo
-import kotolin.study.repository.MemoRepository
+import kotlin.study.model.Memo
+import kotlin.study.repository.MemoRepository
 import org.springframework.stereotype.Service
 import java.util.*
 

@@ -1,4 +1,4 @@
-package kotolin.study.controller.page
+package kotlin.study.controller.page
 
 import com.nhaarman.mockito_kotlin.*
 import kotolin.study.model.Memo

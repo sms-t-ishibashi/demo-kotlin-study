@@ -1,4 +1,4 @@
-package kotolin.study
+package kotlin.study
 
 import org.junit.Test
 import org.junit.runner.RunWith
