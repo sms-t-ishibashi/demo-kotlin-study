@@ -13,7 +13,11 @@ import org.springframework.stereotype.Repository
 class JdbcMemoRepository(val jdbcTemplate: JdbcTemplate) : MemoRepository {
     override fun find(): List<Memo> {
         return jdbcTemplate.query(
-                "SELECT MEMO, AUTHOR FROM MEMO ORDER BY CREATED ASC",
+                """
+                  SELECT MEMO, AUTHOR 
+                  FROM MEMO 
+                  ORDER BY CREATED ASC
+                """,
                 { resultSet, i ->
                     Memo(resultSet.getString("MEMO"), resultSet.getString("AUTHOR"), null)
                 })
